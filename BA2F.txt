@@ -1,0 +1,33 @@
+Implement RandomizedMotifSearch
+
+import random
+def randomized_motif(dna, k, t):
+    
+    best_motifs=[]
+    motifs=[]
+    score=0
+    j=0
+    for i in dna:
+        index=random.randrange(0, len(i)-k+1)
+        best_motifs.append(i[index:index+k])
+
+    for i in range(1000): # while forever
+        
+        profile1=get_profile(best_motifs)
+        motifs=[]
+        for st in dna:
+                
+            s=prob_kmer(st, k, profile1) # find motif for each dna
+            motifs.append(s) # add motif
+           
+        if(Score_of_Motifs(motifs)<Score_of_Motifs(best_motifs)):
+             best_motifs=motifs
+        
+    return best_motifs
+            
+
+k=8
+t=5
+dna=['GGCGTTCAGGCA', 'AAGAATCAGTCA', 'CAAGGAGTTCGC', 
+     'CACGTCAATCAC', 'CAATAATATTCG']
+randomized_motif(dna, k, t)

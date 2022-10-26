@@ -1,0 +1,35 @@
+Find a Position in a Genome Minimizing the Skew
+
+
+import matplotlib.pyplot as plt
+
+def skew_diagram(dna):
+    min_diff=1000
+    diff=0
+    g_count=0
+    c_count=0
+    arr=[]
+    for i in range(len(dna)):
+        if(dna[i]=='G'):
+            g_count=g_count+1
+        elif(dna[i]=='C'):
+            c_count=c_count+1
+        diff=g_count-c_count
+        if(diff<min_diff):
+            min_diff=diff
+        arr.append(diff)
+    
+    g_count=0
+    c_count=0
+    for i in range(len(dna)):
+        if(dna[i]=='G'):
+            g_count=g_count+1
+        elif(dna[i]=='C'):
+            c_count=c_count+1
+        diff=g_count-c_count
+        if(diff==min_diff):
+            print(i+1)
+    plt.plot(arr)
+    plt.show()
+dna="CCTATCGGTGGATTAGCATGTCCCTGTACGTTTCGCCGCGAACTAGTTCACACGGCTTGATGGCAAATGGTTTTTCCGGCGACCGTAATCGTCCACCGAG"
+skew_diagram(dna)

@@ -1,0 +1,35 @@
+Find the Reverse Complement of a String
+
+def rev_complement(dna):
+    reverse_mapping={'A':'T', 'T':'A', 'C':'G', 'G':'C'}
+    s=''
+    
+    for i in range(len(dna)-1,-1,-1):# loop of dna in reverse
+        s+=reverse_mapping[dna[i]] #map of dna[i] or complement
+    
+    return s #the reverse complement string
+    
+rev_complement('AAAACCCGGT')
+
+
+or
+
+
+
+def rev_complement(dna):
+    rev_dna=[]
+    for i in range(len(dna)):
+        if dna[i]=='A':
+            rev_dna.append('T')
+        elif dna[i]=='C':
+            rev_dna.append('G')
+        elif dna[i]=='G':
+            rev_dna.append('C')
+        elif dna[i]=='T':
+            rev_dna.append('A')
+    
+    for i in rev_dna:
+        print(i, end='')
+    
+dna="AAATTGACGCAT"
+rev_complement(dna)

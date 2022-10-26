@@ -1,0 +1,38 @@
+Implement MotifEnumeration
+
+import itertools
+
+def Hamming_Distance(str, kmer):
+    
+    count=0
+    for i in range(0, len(str)):
+        if(str[i]!=kmer[i]):
+            count=count+1
+    return count
+
+def MOTIF_ENUMERATION(DNA, k, d):
+    
+    str='ACGT'
+    list=[]
+    ans=[]
+    for i in itertools.product(str, repeat=k):
+        list.append(''.join(i)) # All pair k-mer
+    
+    for i in list:
+        count=0
+        for str in DNA:
+            for j in range(len(str)-k+1):
+                # find hamming distance for each combination of kmer to each substring of each dna
+                if(Hamming_Distance(str[j:j+k], i)<=d):
+                    count=count+1
+                    break
+        if(count==10): # if the condition of d-mismatch satisfy for each of the DNA
+            ans.append(i)
+            print(i, end=' ')
+    return ans       
+
+DNA=['TGCTGAAGTGATTTGGAAGACAATT', 'GTAATCACCGCCGATCAATTCCATG', 'CTAGAATATTGAAGCCCATTTGCCC', 'CATTGCAATTTTAGAGGAGGTTATC', 'CGATTTCTGTCCACGAGTAAATCCT', 'CTATTAACCGGAGCACCTGTCAATG', 'AGTAACTATTCTATTGGAAAAAATT', 'AGGTCCGATTACCGAAGATCCCCGC', 'CCGCTAAACCCCATTTTTATATCAC', 'GTCGTCTATTTCTGGATGTTCATAA']
+k=5
+d=1
+#Hamming_Distance('ATA', 'ATT')
+MOTIF_ENUMERATION(DNA, k, d)

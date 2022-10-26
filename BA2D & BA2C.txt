@@ -1,0 +1,166 @@
+#PROFILE OF MOTIFS;--
+def get_profile(motifs):
+    
+    return [[j.count(i)/len(motifs) for j in zip(*motifs)] for i in "ACGT"]
+    
+
+motifs=['AAATTGACGCAT', 'GACGACCACGTT', 'CGTCAGCGCCTG', 
+        'GCTGAGCACCGG', 'AGTACGGGACAG']
+get_profile(motifs)
+
+
+
+COUNT OF MPTOFS;---
+def count_motifs(motifs):
+    
+    return [[j.count(i) for j in zip(*motifs)] for i in "ACGT"]
+    
+
+motifs=['AAATTGACGCAT', 'GACGACCACGTT', 'CGTCAGCGCCTG', 
+        'GCTGAGCACCGG', 'AGTACGGGACAG']
+count_motifs(motifs)
+
+
+
+PROFILE OF MOTIFS WITH PSEUDOCOUNT;--
+def pseudo_profile(motifs):
+    
+    return [[(j.count(i)+1)/(len(motifs)+4) for j in zip(*motifs)] for i in "ACGT"]
+    
+
+motifs=['AAATTGACGCAT', 'GACGACCACGTT', 'CGTCAGCGCCTG', 
+        'GCTGAGCACCGG', 'AGTACGGGACAG']
+pseudo_profile(motifs)
+
+
+PSEUDOCOUNTS OF MOTIF;---
+def pseudocount_motifs(motifs):
+    
+    return [[(j.count(i)+1) for j in zip(*motifs)] for i in "ACGT"]
+    
+
+motifs=['AAATTGACGCAT', 'GACGACCACGTT', 'CGTCAGCGCCTG', 
+        'GCTGAGCACCGG', 'AGTACGGGACAG']
+pseudocount_motifs(motifs)
+
+SCORE OF MOTIFS;---
+def Score_of_Motifs(motifs):
+    
+    arr=count_motifs(motifs)
+    score=0
+    for i in range(len(arr[0])): #col
+        max1=0
+        for j in range(len(arr)): #row
+            max1=max( max1, arr[j][i])
+        score+=((len(arr)+1)-max1)
+    return score
+    
+motifs=['AAATTGACGCAT', 'GACGACCACGTT', 'CGTCAGCGCCTG', 
+        'GCTGAGCACCGG', 'AGTACGGGACAG']
+Score_of_Motifs(motifs)
+
+
+
+
+
+CONSENSUS OF MOTIFS;---
+def consensus_string(motifs):
+    
+    arr=count_motifs(motifs)
+    consensus=''
+    len_motif=len(motifs[0])
+    for i in range(len_motif): #col
+        max1=0
+        flag=0
+        for j in range(4): #row
+            if arr[j][i]>max1:
+                flag=j
+                max1=arr[j][i]
+        if flag==0:
+            consensus+='A'
+        elif flag==1:
+            consensus+='C'
+        elif flag==2:
+            consensus+='G'
+        elif flag==3:
+            consensus+='T'
+    return consensus
+
+motifs=['AAATTGACGCAT', 'GACGACCACGTT', 'CGTCAGCGCCTG', 
+        'GCTGAGCACCGG', 'AGTACGGGACAG']
+consensus_string(motifs)
+
+
+BA2C- FIND A PROFILE MOST PROBABLE K MER OF A STRING
+def prob_kmer(dna, k, profile):
+    
+    substring=[]
+    profile_most_probable_kmer=''
+    dna_dict={'A':0, 'C':1, 'G':2, 'T':3}
+    for i in range(len(dna)-k+1):
+        substring+=[dna[i:i+k]]
+    
+    max1=0.0
+    for i in substring:
+        ans=1
+        for j in range(len(i)):
+            ans=ans*(profile[dna_dict[i[j]]][j])
+        if ans>=max1:
+            if ans==max1 and ans!=0:
+                continue
+            else:
+                profile_most_probable_kmer=i
+                max1=ans
+            
+    return profile_most_probable_kmer
+
+dna='ACCTGTTTATTGCCTAAGTTCCGAACAAACCCAATATAGCCCGAGGGCCT'
+k=5
+profile=[[0.2, 0.2, 0.3, 0.2, 0.3],
+[0.4, 0.3, 0.1, 0.5, 0.1],
+[0.3, 0.3, 0.5, 0.2, 0.4],
+[0.1, 0.2, 0.1, 0.1, 0.2]
+]
+prob_kmer(dna, k, profile)
+
+
+
+
+
+BA2D- IMPLEMENT GREED MOTIF
+def greedy_motif(dna, k, t):
+    
+    best_motifs=[]
+    motifs=[]
+    score=0
+    j=0
+    for i in dna:
+        best_motifs.append(i[j:j+k])
+    dna1=dna[0]
+    
+    for i in range(len(dna1)-k+1): # all substring of 1st dna
+        motifs.append(dna1[i:i+k]) # each substring of 1st dna
+        
+        for j in range(len(dna)): #iterate 2nd dna to last dna     
+            if j==0: # exclude 1st dna
+                continue
+
+            profile1=get_profile(motifs)
+            st=prob_kmer(dna[j], k, profile1) # find motif for each dna
+            motifs.append(st) # add motif
+            
+        if(Score_of_Motifs(motifs)<Score_of_Motifs(best_motifs)):
+             best_motifs=motifs
+        motifs=[]
+    return best_motifs
+            
+
+k=3
+t=5
+dna=['GGCGTTCAGGCA', 'AAGAATCAGTCA', 'CAAGGAGTTCGC', 
+     'CACGTCAATCAC', 'CAATAATATTCG']
+greedy_motif(dna, k, t)
+
+
+
+

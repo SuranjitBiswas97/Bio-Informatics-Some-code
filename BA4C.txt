@@ -1,0 +1,31 @@
+Generate the Theoretical Spectrum of a Cyclic Peptide
+
+
+import pandas as pd
+
+def theoretical_spectrum(pep):
+    
+    st=''
+    arr=[]
+    arr.append(pep)
+    l=len(pep)
+    pep=pep+pep
+    for i in range(l):
+        for j in range(l):
+            st=pep[j:j+i]
+            arr.append(st)
+    arr=set(arr)
+    theoretical_spectrum=[]
+    for st in arr:
+        m=0
+        for i in st:
+            m+=mass[i]
+        theoretical_spectrum.append(m)
+    return sorted(theoretical_spectrum)
+    
+df=pd.read_csv('integer_mass_table.txt', header=None, delim_whitespace=True)
+mass=dict(zip(df[0], df[1]))
+print(mass)          
+
+pep='LEQN'
+theoretical_spectrum(pep)

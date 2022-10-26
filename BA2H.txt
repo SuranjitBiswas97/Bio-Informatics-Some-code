@@ -1,0 +1,30 @@
+Implement DistanceBetweenPatternAndStrings
+
+
+def hamming_distance(kmer, substring):
+    ans=0
+    for i in range(len(kmer)):
+        if kmer[i]!=substring[i]:
+            ans+=1
+    return ans
+
+def ImplementDistanceBetweenPatternAndStrings(kmer, dna):
+    
+    k=len(kmer)
+    ans=0
+    
+    for st in dna:
+        min1=100000000
+        
+        for i in range(len(st)-k+1):
+            substring=st[i:i+k]
+            ham=hamming_distance(kmer, substring)
+            if ham<min1:
+                min1=ham
+        ans=ans+min1
+    
+    return ans
+
+kmer='AAA'
+dna=['TTACCTTAAC', 'GATATCTGTC', 'ACGGCGTTCG', 'CCCTAAAGAG', 'CGTCAGAGGT']
+ImplementDistanceBetweenPatternAndStrings(kmer, dna)

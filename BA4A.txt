@@ -1,0 +1,18 @@
+Translate an RNA String into an Amino Acid String
+
+def rna_to_amino_acid(rna):
+    
+    st=[]
+    for i in range(0, len(rna)-1, 3):
+        if(codon[rna[i:i+3]]=='Stop'):
+            continue
+        st.append(codon[rna[i:i+3]])
+        
+    print(''.join(st))
+    
+with open('rna_codons.txt') as f:
+    table=f.read().split()
+    codon=dict(zip(table[::2], table[1::2]))
+    
+rna='AUGGCCAUGGCGCCCAGAACUGAGAUCAAUAGUACCCGUAUUAACGGGUGA'
+rna_to_amino_acid(rna)

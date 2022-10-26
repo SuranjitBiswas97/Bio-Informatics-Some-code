@@ -1,0 +1,48 @@
+Find a Longest Common Subsequence of Two Strings
+
+from pandas import *
+def LCS(str1, str2):
+    str1='#'+str1
+    str2='#'+str2
+    
+    l1=len(str1)
+    l2=len(str2)
+    
+    dp=[[0 for i in range(l1+10)] for j in range(l2+10)]
+    path=[[0 for i in range(l1+10)] for j in range(l2+10)]
+    
+    for i in range(l1):
+        for j in range(l2):
+            if i==0 and j==0:
+                continue
+            if(str1[i]==str2[j]):
+                dp[i][j]=dp[i-1][j-1]+1
+                path[i][j]=1
+            elif(dp[i-1][j]>dp[i][j-1]):
+                dp[i][j]=dp[i-1][j]
+                path[i][j]=2
+            else:
+                dp[i][j]=dp[i][j-1]
+                path[i][j]=3
+                
+    i=l1-1
+    j=l2-1
+    s=''
+    while(i>=0 and j>=0):
+        if(path[i][j]==1):
+            s+=str1[i]
+            i=i-1
+            j=j-1
+        elif(path[i][j]==2):
+            if(i==0):
+                break
+            i=i-1
+        elif(path[i][j]==3):
+            if(j==0):
+                break
+            j=j-1
+    return s[::-1]
+    
+str1='AACCTTGG'
+str2='ACACTGTGA'
+LCS(str1, str2)

@@ -1,0 +1,23 @@
+Generate the Frequency Array of a String
+
+
+import itertools
+
+def frequency_array_of_a_string(dna, k):
+    str1="ACGT"
+    arr=[]
+    for i in itertools.product(str1, repeat=k):
+        p=''.join(i)
+        arr.append(p)
+        print(p) #all pair k-mer
+    for i in arr:
+        count=0
+        for j in range(len(dna)-k+1):
+            str2=dna[j:j+k] #substring of dna length = k
+            if(i==str2):
+                count=count+1
+        print(count, end=' ')
+    
+dna='ACGCGGCTCTGAAA'
+k=2
+frequency_array_of_a_string(dna, k)

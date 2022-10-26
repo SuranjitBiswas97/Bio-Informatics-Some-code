@@ -1,0 +1,31 @@
+Find the Most Frequent Words in a String
+
+def most_frequent_word_occurance(dna, k):
+    
+    d={}
+    max_count=0
+    for i in range(len(dna)-k+1): #len(genome)=17, k=4, loop = 0 to (17-4+1)
+        s=dna[i:i+k] #portion of genome, size like pattern
+        #print(i) #index of loop
+        #print(s) #string of genome, size like pattern
+        count=0
+        for j in range(len(dna)-k+1):
+            if s==dna[j:j+k]:
+                d[s]=0
+                count=count+1
+        if max_count<count:
+            max_count=count
+    
+    for i in range(len(dna)-k+1): #len(genome)=17, k=4, loop = 0 to (17-4+1)
+        s=dna[i:i+k] #portion of genome, size like pattern
+        #print(i) #index of loop
+        #print(s) #string of genome, size like pattern
+        count=0
+        for j in range(len(dna)-k+1):
+            if s==dna[j:j+k]:
+                count=count+1
+        if max_count==count and d[s]==0:
+            d[s]=1
+            print(s, end=' ')  
+            
+most_frequent_word_occurance('ACGTTGCATGTCGCATGATGCATGAGAGCT', 4)

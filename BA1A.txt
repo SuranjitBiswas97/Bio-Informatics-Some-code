@@ -1,0 +1,15 @@
+Compute the Number of Times a Pattern Appears in a Text
+
+
+def pattern_occurance(dna, pattern):
+    
+    k=len(pattern)
+    count=0
+    for i in range(len(dna)-k+1): #len(dna)=5, k=3, loop = 0 to (5-3+1)
+        s=dna[i:i+k] #portion of dna, size like pattern
+        #print(i) #index of loop
+        #print(s) #string of dna, size like pattern
+        if s==pattern:
+            count=count+1
+    return count
+pattern_occurance('GCGCG', 'GCG')

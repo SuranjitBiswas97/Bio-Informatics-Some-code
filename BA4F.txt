@@ -1,0 +1,38 @@
+Compute the Score of a Cyclic Peptide Against a Spectrum
+
+import pandas as pd
+
+def theoretical_spectrum(pep):
+    
+    st=''
+    arr=[]
+    arr.append(pep)
+    l=len(pep)
+    pep=pep+pep
+    for i in range(l):
+        for j in range(l):
+            st=pep[j:j+i]
+            arr.append(st)
+    arr=set(arr)
+    theoretical_spectrum=[]
+    for st in arr:
+        m=0
+        for i in st:
+            m+=mass[i]
+        theoretical_spectrum.append(m)
+    mark=[0 for i in range(1000000)]
+    count=0
+    for i in theoretical_spectrum:
+        for j in experimental_spectrum:
+            if(i==j and mark[j]==0):
+                count+=1
+                mark[j]=1
+                break
+    return count
+    
+df=pd.read_csv('integer_mass_table.txt', header=None, delim_whitespace=True)
+mass=dict(zip(df[0], df[1]))        
+
+pep='NQEL'
+experimental_spectrum=[0, 99, 113, 114, 128, 227, 257, 299, 355, 356, 370, 371, 484]
+theoretical_spectrum(pep)

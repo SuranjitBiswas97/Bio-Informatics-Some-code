@@ -1,0 +1,51 @@
+Reconstruct a String from its k-mer Composition
+
+def reconstruct_string(k, kmers):
+    
+    dict={'CTTA':0, 'ACCA':0, 'TACC':0, 'GGCT':0, 'GCTT':0, 'TTAC':0}
+    cnt=1
+    l=len(kmers)
+    genome=''.join(kmers[0])
+    dict[kmers[0]]=1
+    
+    while(1):
+        flag=0
+        for i in range(1, len(kmers)):
+            m=dict[kmers[i]]
+            if(m==0):
+                suffix=genome[cnt::]
+                prefix=kmers[i][:k-1:]
+                if(suffix==prefix):
+                    p=kmers[i][3]
+                    genome+=''.join(p)
+                    dict[kmers[i]]=1
+                    cnt+=1
+                    flag=1
+        if(flag==0):
+            break
+    
+    while(1):
+        flag=0
+        for i in range(1, len(kmers)):
+            m=dict[kmers[i]]
+            if(m==0):
+                prefix=genome[:3:]
+                suffix=kmers[i][1::]
+                if(suffix==prefix):
+                    p=kmers[i][0]
+                    string=''
+                    string+=''.join(p)
+                    string+=''.join(genome)
+                    genome=string
+                    dict[kmers[i]]=1
+                    cnt+=1
+                    flag=1
+        if(cnt==l):
+            break
+    
+    return genome
+        
+    
+k=4
+kmers=['CTTA', 'ACCA', 'TACC', 'GGCT', 'GCTT', 'TTAC']
+reconstruct_string(k, kmers)

@@ -1,0 +1,44 @@
+Find Substrings of a Genome Encoding a Given Amino Acid String
+
+def reverse_complement(dna):
+    
+    dict={'A':'T', 'T':'A', 'C':'G', 'G':'C'}
+    s=''
+    st=dna[::-1]
+    
+    for i in st:
+        s+=''.join(dict[i])
+    
+    return s
+
+def check(dna, pep):
+    
+    st=''
+    for i in range(0, len(dna)-1, 3):
+        st+=''.join(codon[dna[i:i+3]])
+    
+    return st==pep
+    
+def dna_to_amino_acid(dna, pep):
+
+    l=len(pep)*3
+    arr=[]
+    for i in range(len(dna)-l+1):
+        st=dna[i:i+l]
+        re_st=reverse_complement(st)
+        a=check(st, pep)
+        b=check(re_st, pep)
+        if(a):
+            arr.append(st)
+        if(b):
+            arr.append(st)
+    print('\n'.join(arr))
+
+with open('dna_codons.txt') as f:
+    table=f.read().split()
+    codon=dict(zip(table[::2], table[1::2]))
+    #print(codon)
+    
+dna='ATGGCCATGGCCCCCAGAACTGAGATCAATAGTACCCGTATTAACGGGTGA'
+pep='MA'
+dna_to_amino_acid(dna, pep)

@@ -1,0 +1,13 @@
+Reconstruct a String from its Genome Path
+
+def genome_path(kmers):
+    
+    genome=''
+    genome=''.join(kmers[0])
+    for i in range(1, len(kmers)):
+        p=kmers[i][len(kmers[0])-1]
+        genome+=''.join(p)
+    return genome
+    
+kmers=['ACCGA', 'CCGAA', 'CGAAG', 'GAAGC', 'AAGCT']
+genome_path(kmers)

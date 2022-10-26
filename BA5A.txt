@@ -1,0 +1,15 @@
+Find the Minimum Number of Coins Needed to Make Change
+
+def coin_change(make, coins):
+    dp=[100000000 for i in range(make+1)]
+    
+    dp[0]=0
+    for i in range(len(coins)):
+        for j in range(coins[i], make+1):
+            dp[j]=min(dp[j], dp[j-coins[i]]+1)
+    
+    return dp[make]
+    
+make=40
+coins=[1,5,10,20,25,50]
+coin_change(make, coins)

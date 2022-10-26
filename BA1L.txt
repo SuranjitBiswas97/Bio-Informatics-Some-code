@@ -1,0 +1,20 @@
+Implement PatternToNumber
+
+
+import itertools
+
+def ImplementPatternToNumber(dna):
+    k=len(dna)
+    str1="ACGT"
+    count=0
+    for i in itertools.product(str1, repeat=k):
+        p=''.join(i)
+        #print(p) #all pair k-mer
+        if(p==dna):
+            print(count)
+            break
+        count=count+1
+        
+    
+dna='AGT'
+ImplementPatternToNumber(dna)

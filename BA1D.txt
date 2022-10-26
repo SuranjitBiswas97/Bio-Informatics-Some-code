@@ -1,0 +1,14 @@
+Find All Occurrences of a Pattern in a String 
+
+def pattern_occurance(pattern, genome):
+    
+    k=len(pattern)
+    count=0
+    for i in range(len(genome)-k+1): #len(genome)=17, k=4, loop = 0 to (17-4+1)
+        s=genome[i:i+k] #portion of genome, size like pattern
+        #print(i) #index of loop
+        #print(s) #string of genome, size like pattern
+        if s==pattern:
+            print(i, end=' ')
+            
+pattern_occurance('TCTAACCTC', 'GATATATGCATATACTT')

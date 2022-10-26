@@ -1,0 +1,18 @@
+Implement NumberToPattern
+
+import itertools
+def ImplementNumberToPattern(index, k):
+    
+    str1="ACGT"
+    count=0
+    for i in itertools.product(str1, repeat=k):
+        p=''.join(i)
+        #print(p) #all pair k-mer
+        if(count==index):
+            print(p)
+            break
+        count=count+1
+    
+index=45
+k=4
+ImplementNumberToPattern(index, k)
